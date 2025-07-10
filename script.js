@@ -1,5 +1,5 @@
 // Apuntamos al servidor local de Python (Flask)
-const SCRIPT_URL = "https://elianmw.pythonanywhere.com/login";
+const SCRIPT_URL = "https://elianw.pythonanywhere.com/login"; // Probablemente tenga 'elianw'
 
 const form = document.getElementById('loginForm');
 const mensajeEl = document.getElementById('mensaje');
