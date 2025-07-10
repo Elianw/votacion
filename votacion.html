@@ -12,6 +12,12 @@
         <h1>Elegí a tus candidatos</h1>
         <p>Seleccioná hasta 5 candidatos y presiona "Emitir Voto"</p>
         
+        <div id="preseleccion-container">
+            <h2>Tu Selección</h2>
+            <div id="preseleccion-slots" class="slots-container">
+                </div>
+        </div>
+        
         <p id="contador-seleccion">Seleccionados: 0 de 5</p>
 
         <div id="candidatos-container">
@@ -25,8 +31,9 @@
     <div id="alerta-personalizada" class="modal-overlay" style="display: none;">
         <div class="modal-contenido">
             <h2 id="alerta-titulo"></h2>
-            <p id="alerta-mensaje"></p>
-            <button id="alerta-cerrar">Aceptar</button>
+            <div id="alerta-mensaje"></div>
+            <div id="alerta-botones" class="modal-botones">
+                </div>
         </div>
     </div>
 
