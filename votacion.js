@@ -1,8 +1,27 @@
 document.addEventListener('DOMContentLoaded', () => {
     const mainContainer = document.querySelector('.container');
     const candidatosContainer = document.getElementById('candidatos-container');
+    
+    // Elementos de la alerta personalizada
+    const alertaPersonalizada = document.getElementById('alerta-personalizada');
+    const alertaTitulo = document.getElementById('alerta-titulo');
+    const alertaMensaje = document.getElementById('alerta-mensaje');
+    const alertaCerrar = document.getElementById('alerta-cerrar');
+
     const lote = localStorage.getItem('userLote'), codigo = localStorage.getItem('userCodigo');
     if (!lote || !codigo) { window.location.replace('index.html'); return; }
+
+    // Función para mostrar nuestra alerta
+    function mostrarAlerta(titulo, mensaje) {
+        alertaTitulo.textContent = titulo;
+        alertaMensaje.textContent = mensaje;
+        alertaPersonalizada.style.display = 'flex';
+    }
+
+    // Evento para cerrar la alerta
+    alertaCerrar.addEventListener('click', () => {
+        alertaPersonalizada.style.display = 'none';
+    });
 
     function actualizarVisuales() {
         const seleccionados = document.querySelectorAll('input[name="candidato"]:checked').length;
@@ -20,7 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // CAMBIO 1: http -> https
     fetch('https://votacion-consejo-espinillo.onrender.com/candidatos')
         .then(response => response.json())
         .then(candidatos => {
@@ -42,7 +60,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 const primerNombre = partesNombre.shift() || '';
                 const apellido = partesNombre.join(' ');
                 const nombreHTML = `<span class="nombre-linea">${primerNombre}</span><span class="nombre-linea">${apellido}</span>`;
-                candidatoDiv.innerHTML = `<img src="${candidato.FotoURL}" alt="Foto de ${candidato.Nombre}" class="candidato-foto"><div class="candidato-info"><h3 class="candidato-nombre">${nombreHTML}</h3><p class="candidato-lote">Lote: ${candidato.Lote}</p><p class="candidato-propuesta">${candidato.Propuesta || 'Sin propuesta.'}</p><input type="checkbox" name="candidato" value="${candidato.ID}" data-nombre="${candidato.Nombre}" data-lote="${candidato.Lote}" id="${checkboxId}" class="hidden-checkbox"><label class="checkbox-label" for="${checkboxId}">Seleccionar</label></div>`;
+                candidatoDiv.innerHTML = `
+                    <img src="${candidato.FotoURL}" alt="Foto de ${candidato.Nombre}" class="candidato-foto">
+                    <div class="candidato-info">
+                        <h3 class="candidato-nombre">${nombreHTML}</h3>
+                        <p class="candidato-lote">Lote: ${candidato.Lote || ''}</p>
+                        <p class="candidato-propuesta">${candidato.Propuesta || 'Sin propuesta.'}</p>
+                        <input type="checkbox" name="candidato" value="${candidato.ID}" data-nombre="${candidato.Nombre}" data-lote="${candidato.Lote || ''}" id="${checkboxId}" class="hidden-checkbox">
+                        <label class="checkbox-label" for="${checkboxId}">Seleccionar</label>
+                    </div>`;
                 grillaDiv.appendChild(candidatoDiv);
             });
             form.appendChild(grillaDiv);
@@ -52,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const seleccionados = form.querySelectorAll('input[name="candidato"]:checked').length;
                     if (seleccionados > 5) {
                         e.target.checked = false;
-                        alert('Puedes elegir como máximo 5 candidatos.');
+                        mostrarAlerta('Límite Alcanzado', 'Puedes elegir como máximo 5 candidatos.');
                         const card = e.target.closest('.candidato-card');
                         card.classList.add('error-seleccion');
                         setTimeout(() => card.classList.remove('error-seleccion'), 1000);
@@ -66,10 +92,12 @@ document.addEventListener('DOMContentLoaded', () => {
             emailDiv.style.marginTop = '30px';
             emailDiv.innerHTML = `<label for="emailInput">Email (Opcional)</label><input type="email" id="emailInput" placeholder="Recibe una copia de tu voto">`;
             form.appendChild(emailDiv);
+
             const submitButton = document.createElement('button');
             submitButton.type = 'submit';
             submitButton.textContent = 'Emitir Voto';
             form.appendChild(submitButton);
+
             candidatosContainer.innerHTML = '';
             candidatosContainer.appendChild(form);
 
@@ -80,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (seleccionados.length === 0 || seleccionados.length > 5) {
                     mensajeVotacion.textContent = 'Debes elegir entre 1 y 5 candidatos.';
                     mensajeVotacion.className = 'mensaje error';
-                    form.appendChild(mensajeVotacion);
+                    if (!document.getElementById('mensaje-votacion')) form.appendChild(mensajeVotacion);
                     return;
                 }
                 const votoIds = Array.from(seleccionados).map(cb => cb.value);
@@ -89,8 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const email = document.getElementById('emailInput').value;
                 submitButton.disabled = true;
                 submitButton.textContent = 'Procesando...';
-
-                // CAMBIO 2: http -> https
+                
                 fetch('https://votacion-consejo-espinillo.onrender.com/votar', {
                     method: 'POST', mode: 'cors', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ lote, codigo, votoIds, votoNombres, votoLotes, email })
@@ -115,6 +142,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         submitButton.disabled = false;
                         submitButton.textContent = 'Emitir Voto';
                     }
+                }).catch(error => {
+                     const mensajeVotacion = document.getElementById('mensaje-votacion') || document.createElement('p');
+                     mensajeVotacion.textContent = 'Error de conexión. ¿Está el servidor de Python funcionando?';
+                     mensajeVotacion.className = 'mensaje error';
+                     if (!document.getElementById('mensaje-votacion')) form.appendChild(mensajeVotacion);
                 });
             });
         })
