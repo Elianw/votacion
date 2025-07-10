@@ -96,6 +96,16 @@ button:disabled { background-color: #bdc3c7; cursor: not-allowed; transform: non
     padding: 20px; margin-bottom: 25px; margin-top: 25px;
 }
 #preseleccion-container h2 { margin: 0 0 15px 0; font-size: 1.2em; color: var(--text-color); }
+
+/* NUEVO: Estilo para la nota aclaratoria */
+.nota-preseleccion {
+    font-size: 0.9em;
+    font-style: italic;
+    color: #7f8c8d;
+    margin-top: -10px;
+    margin-bottom: 20px;
+}
+
 .slots-container { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; }
 .candidato-slot {
     background-color: white; border-radius: 8px; padding: 10px; display: flex;
