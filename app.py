@@ -12,13 +12,14 @@ app = Flask(__name__)
 CORS(app)
 
 # --- CONFIGURACIÓN DE EMAIL ---
-EMAIL_REMITENTE = "elianmw@gmail.com"  # Tu dirección de Gmail
-CONTRASENA_APLICACION = "zatd dycx ernw gqvp" # La contraseña de aplicación de 16 letras que generaste
+EMAIL_REMITENTE = "tu_email@gmail.com"
+CONTRASENA_APLICACION = "xxxxxxxxxxxxxxxx"
 
-
-# Conexión con Google Sheets
+# --- Conexión con Google Sheets ---
 try:
+    # CAMBIO: Volvemos a usar el nombre del archivo, ya que Render lo pondrá en la misma carpeta
     gc = gspread.service_account(filename='votacion-espi.json')
+    
     spreadsheet = gc.open("Base de Datos de Votación")
     sheet_usuarios = spreadsheet.sheet1
     sheet_candidatos = spreadsheet.worksheet("Candidatos")
@@ -26,6 +27,8 @@ try:
 except Exception as e:
     print(f"\n❌ ERROR: Fallo durante la configuración de Google Sheets: {e}\n")
     exit()
+
+# ... (El resto del archivo no necesita cambios) ...
 
 def enviar_email_confirmacion(destinatario, lote_votante, voto_nombres, voto_lotes):
     if not destinatario: return
@@ -78,32 +81,23 @@ def emitir_voto():
     data = request.get_json()
     lote, codigo, voto_ids = data.get('lote'), data.get('codigo'), data.get('votoIds')
     voto_nombres, voto_lotes, email = data.get('votoNombres'), data.get('votoLotes'), data.get('email', '')
-
     if not isinstance(voto_ids, list) or not (1 <= len(voto_ids) <= 5):
         return jsonify({'exito': False, 'mensaje': 'Debes seleccionar entre 1 y 5 candidatos.'}), 400
     try:
         if sheet_votos.find(lote, in_column=2): return jsonify({'exito': False, 'mensaje': 'Ya has emitido un voto anteriormente.'})
     except gspread.exceptions.CellNotFound: pass
     try:
-        # --- CAMBIO: Se formatea el texto para guardar en la hoja ---
         votos_formateados = [f"{voto_nombres[i]} - Lote: {voto_lotes[i]}" for i in range(len(voto_ids))]
         votos_formateados.extend([''] * (5 - len(votos_formateados)))
-        
         fecha_actual = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        
-        # Se usa la nueva lista formateada para crear la fila
         nuevo_voto = [fecha_actual, lote, codigo] + votos_formateados + [email]
-        
         sheet_votos.append_row(nuevo_voto)
-        
         try:
             celda_usuario = sheet_usuarios.find(lote, in_column=1)
             if celda_usuario: sheet_usuarios.update_cell(celda_usuario.row, 3, 'SI')
         except Exception as e: print(f"Advertencia: No se pudo marcar el código para el lote {lote}. Error: {e}")
-        
         if email:
             enviar_email_confirmacion(destinatario=email, lote_votante=lote, voto_nombres=voto_nombres, voto_lotes=voto_lotes)
-            
         return jsonify({'exito': True, 'mensaje': '¡Gracias! Tu voto ha sido registrado.'})
     except Exception as e: return jsonify({'exito': False, 'mensaje': f'Ocurrió un error al registrar el voto: {e}'}), 500
 
