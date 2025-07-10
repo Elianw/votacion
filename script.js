@@ -1,4 +1,4 @@
-// Apuntamos al servidor local de Python (Flask)
+// CAMBIO: http -> https
 const SCRIPT_URL = "https://votacion-consejo-espinillo.onrender.com/login";
 
 const form = document.getElementById('loginForm');
@@ -33,7 +33,6 @@ form.addEventListener('submit', function(e) {
         if (result.exito) {
             mensajeEl.classList.add('exito');
             
-            // Guardamos las credenciales y redirigimos
             localStorage.setItem('userLote', form.lote.value);
             localStorage.setItem('userCodigo', form.codigo.value);
 
