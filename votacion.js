@@ -31,17 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function actualizarVisuales() {
         const seleccionados = document.querySelectorAll('input[name="candidato"]:checked').length;
         document.getElementById('contador-seleccion').textContent = `Seleccionados: ${seleccionados} de 5`;
-        document.querySelectorAll('.candidato-card').forEach(card => {
-            const checkbox = card.querySelector('input[type="checkbox"]');
-            const label = card.querySelector('.checkbox-label');
-            if (checkbox.checked) {
-                card.classList.add('seleccionado');
-                label.textContent = 'Deseleccionar';
-            } else {
-                card.classList.remove('seleccionado');
-                label.textContent = 'Seleccionar';
-            }
-        });
         const preseleccionSlots = document.getElementById('preseleccion-slots');
         preseleccionSlots.innerHTML = '';
         document.querySelectorAll('input[name="candidato"]:checked').forEach(checkbox => {
@@ -55,6 +44,17 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let i = document.querySelectorAll('input[name="candidato"]:checked').length; i < 5; i++) {
             preseleccionSlots.innerHTML += '<div class="candidato-slot slot-vacio">Vacío</div>';
         }
+        document.querySelectorAll('.grilla-candidatos .candidato-card').forEach(card => {
+            const checkbox = card.querySelector('input[type="checkbox"]');
+            const label = card.querySelector('.checkbox-label');
+            if (checkbox.checked) {
+                card.classList.add('seleccionado');
+                label.textContent = 'Deseleccionar';
+            } else {
+                card.classList.remove('seleccionado');
+                label.textContent = 'Seleccionar';
+            }
+        });
     }
 
     fetch('https://votacion-consejo-espinillo.onrender.com/candidatos')
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         e.target.checked = false;
                         modal.mostrar({titulo: 'Límite Alcanzado', mensaje: 'Puedes elegir como máximo 5 candidatos.', botones: [{texto: 'Aceptar'}]});
                     }
-                    actualizarUI();
+                    actualizarVisuales();
                 }
             });
             const emailDiv = document.createElement('div');
@@ -100,11 +100,12 @@ document.addEventListener('DOMContentLoaded', () => {
             form.appendChild(submitButton);
             candidatosContainer.innerHTML = '';
             candidatosContainer.appendChild(form);
-            actualizarUI();
+            actualizarVisuales();
 
             form.addEventListener('submit', function (e) {
                 e.preventDefault();
                 const seleccionados = document.querySelectorAll('input[name="candidato"]:checked');
+                const mensajeVotacion = document.getElementById('mensaje-votacion');
                 if (seleccionados.length === 0) {
                     modal.mostrar({titulo: 'Selección Vacía', mensaje: 'Debes elegir al menos un candidato.', botones: [{texto: 'Aceptar'}]});
                     return;
@@ -123,7 +124,13 @@ document.addEventListener('DOMContentLoaded', () => {
                             const mensajeWhatsapp = `Hola, quiero mi comprobante de voto para el Lote ${lote}.`;
                             const numeroWhatsapp = "5491121780900";
                             const whatsappLink = `https://wa.me/${numeroWhatsapp}?text=${encodeURIComponent(mensajeWhatsapp)}`;
-                            mainContainer.innerHTML = `<h2 style="font-size: 2em;">¡Gracias!</h2><p style="font-size: 1.2em; color: #666;">Tu voto ha sido registrado.</p><div class="botones-finales"><a href="${whatsappLink}" target="_blank" class="whatsapp-button">Pedí tu comprobante por WhatsApp</a></div><p class="texto-final">Ya podés cerrar esta ventana.</p>`;
+                            mainContainer.innerHTML = `
+                                <h2 style="font-size: 2em;">¡Gracias!</h2>
+                                <p style="font-size: 1.2em; color: #666;">Tu voto ha sido registrado.</p>
+                                <div class="botones-finales">
+                                    <a href="${whatsappLink}" target="_blank" class="whatsapp-button">Pedí tu comprobante por WhatsApp</a>
+                                </div>
+                                <p class="texto-final">Ya podés cerrar esta ventana.</p>`;
                             localStorage.clear();
                             history.replaceState(null, '', 'gracias.html');
                         } else {
@@ -134,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 };
                 
-                // --- CAMBIO: Se añade el lote al mensaje de confirmación ---
+                // ESTA ES LA LÍNEA QUE AÑADE EL LOTE A LA CONFIRMACIÓN
                 let confirmacionHTML = '<p>Vas a emitir tu voto por los siguientes candidatos:</p><ul style="text-align: left; display: inline-block; margin-top: 10px;">';
                 seleccionados.forEach(cb => {
                     confirmacionHTML += `<li>${cb.getAttribute('data-nombre')} (Lote: ${cb.getAttribute('data-lote')})</li>`;
