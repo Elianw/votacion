@@ -1,0 +1,201 @@
+/* --- Importación de Fuente Moderna --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/* --- Variables de Color --- */
+:root {
+    --primary-color: #4a69bd;
+    --primary-hover: #3c5aa6;
+    --success-color: #2ecc71;
+    --error-color: #e74c3c;
+    --light-gray: #f1f2f6;
+    --text-color: #34495e;
+    --border-color: #dfe4ea;
+}
+
+/* --- Estilos Generales --- */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--light-gray);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.container {
+    background-color: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    width: 100%;
+    max-width: 900px; /* Ancho para la página de votación */
+}
+
+/* Estilo específico para que el contenedor del login sea más angosto */
+.container.login-page {
+    max-width: 450px; 
+}
+
+.login-logo {
+    width: 120px;
+    height: 120px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+p {
+    color: #7f8c8d;
+    margin-bottom: 30px;
+}
+
+.input-group { margin-bottom: 20px; text-align: left; }
+label { display: block; margin-bottom: 8px; font-weight: 500; color: #34495e; }
+
+input[type="text"], input[type="password"], input[type="email"] {
+    width: 100%; padding: 12px; border: 1px solid var(--border-color);
+    border-radius: 8px; box-sizing: border-box; font-family: 'Poppins', sans-serif;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
+    outline: none; border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(74, 105, 189, 0.2);
+}
+
+button {
+    width: 100%; padding: 12px; background-color: var(--primary-color); color: white;
+    border: none; border-radius: 8px; font-size: 16px; cursor: pointer;
+    transition: all 0.3s; margin-top: 10px; font-weight: 500;
+}
+button:hover { background-color: var(--primary-hover); transform: translateY(-2px); }
+button:disabled { background-color: #bdc3c7; cursor: not-allowed; transform: none; }
+
+.mensaje { margin-top: 20px; font-weight: 500; min-height: 20px; }
+.mensaje.exito { color: var(--success-color); }
+.mensaje.error { color: var(--error-color); }
+
+/* --- Estilos Página de Votación --- */
+#contador-seleccion {
+    font-size: 1.1em; font-weight: 600; color: var(--text-color); margin-bottom: 20px;
+    padding: 10px; background-color: var(--light-gray); border-radius: 8px;
+}
+
+.grilla-candidatos { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
+
+.candidato-card {
+    display: flex;
+    flex-direction: column;
+    text-align: center; 
+    border: 2px solid var(--border-color);
+    padding: 20px 15px; 
+    border-radius: 12px; 
+    transition: all 0.2s ease-in-out;
+}
+.candidato-card.seleccionado {
+    border-color: var(--success-color);
+    box-shadow: 0 5px 15px rgba(46, 204, 113, 0.2);
+    transform: translateY(-3px);
+}
+.candidato-card.error-seleccion {
+    border-color: var(--error-color);
+    transform: scale(1.05);
+}
+
+.candidato-foto {
+    width: 80px; height: 80px; border-radius: 50%; object-fit: cover;
+    margin: 0 auto 15px auto; border: 3px solid white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.candidato-info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.candidato-nombre {
+    margin: 0 0 5px 0;
+    font-size: 1em;
+    font-weight: 600;
+    min-height: 2.4em; /* Asegura espacio para dos líneas */
+    line-height: 1.2em;
+}
+
+/* NUEVO: Estilo para forzar el salto de línea */
+.nombre-linea {
+    display: block;
+}
+
+.candidato-lote { font-size: 13px; font-weight: 600; color: var(--primary-color); margin: 5px 0 10px 0; padding: 0; }
+.candidato-propuesta { 
+    font-size: 12px; 
+    margin: 0 0 15px 0;
+    color: #7f8c8d;
+    padding: 0;
+    flex-grow: 1;
+}
+
+.hidden-checkbox { display: none; }
+.checkbox-label {
+    display: inline-block; background-color: var(--light-gray);
+    padding: 8px 12px; border-radius: 20px; cursor: pointer;
+    font-size: 13px; font-weight: 500; transition: all 0.3s;
+}
+.candidato-card.seleccionado .checkbox-label {
+    background-color: var(--success-color);
+    color: white;
+}
+
+/* --- Estilos para Botones Finales --- */
+.botones-finales {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.whatsapp-button {
+    padding: 12px 25px;
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+    font-size: 1em;
+    background-color: #25D366;
+}
+.whatsapp-button:hover { background-color: #1DA851; transform: translateY(-2px); }
+
+.texto-final {
+    margin-top: 20px;
+    font-size: 0.9em;
+    color: #7f8c8d;
+}
+
+/* --- DISEÑO RESPONSIVO --- */
+@media (max-width: 920px) {
+    .container { padding: 30px; }
+    .grilla-candidatos { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 600px) {
+    .container { padding: 20px; }
+    .grilla-candidatos { grid-template-columns: repeat(2, 1fr); }
+    .botones-finales { flex-direction: column; }
+}
+@media (max-width: 480px) {
+    .grilla-candidatos { grid-template-columns: 1fr; }
+}

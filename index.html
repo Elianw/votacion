@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votación Espinillo Golf Club</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container login-page">
+        <img src="https://http2.mlstatic.com/D_NQ_NP_2X_645979-MLA83679900398_042025-F.webp" alt="Logo Club" class="login-logo">
+        
+        <h1>Votación Consejo de Vecinos<br>Espinillo Golf Club</h1>
+        <p>Por favor, ingrese sus credenciales para continuar.</p>
+
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="lote">Número de Lote</label>
+                <input type="text" id="lote" name="lote" placeholder="Ej: 101" required>
+            </div>
+            <div class="input-group">
+                <label for="codigo">Código Único</label>
+                <input type="password" id="codigo" name="codigo" placeholder="Ingrese su código" required>
+            </div>
+            <button type="submit" id="submitButton">Ingresar</button>
+        </form>
+        <p id="mensaje" class="mensaje"></p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

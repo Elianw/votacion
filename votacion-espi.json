@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "votacion-espi",
+  "private_key_id": "36caf99153d650682182fc19fb6f537c747f0e47",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCmalsHoTyIzwsx\nTB5IFOxyOuKbXjwzdjQ+fmZI12RkGgJncCkoKWBjYxCB8fP+msEN0SVeVJMl3lKK\n/cyWCfs6kKmrySXuG1lIR6CMVurOp7dXmR3y8kDDcq36sxoDCRRdbDkTxI53Cb3l\nQ++1K6DPAafsKkJT7XTHMphA3Buckp4ZqV3ztCLK/V9CN3KSP8kAoVccj62JdRwG\n/bs49IZZ2l0TVKnIXr1irLa5IEg+6wmK+tsVJXCL0evQ/hzdt/hSvyf/r4c9r5PB\nXqeDs1mFRdXQnlTucmqzlAGNbFal96+HgGr4QSKFIONJXhFADd7xRbK09EFGtGiN\nwv4GP2bhAgMBAAECggEACC8xnibRvnQ5S5G/6QFfbhBDkgrQyOKit+KZRvKR6ULm\ntJ3dZlBfoU+vUYa73l0Pys1LClA8Qufj1RpdkBD6WjNgZtaQDx1o9w8vwAsrxeFV\neOFKyeacZQhcMljR2g2doukWRwi7DXNtE4wTa0xzno6pKqoa5DwIyt2sA3+Xu4vd\nlJSXIAw3CuAsYW17zBeUh8c8f301rHvmoPJs1adK6pOxfQlBYcD2bgxzGZbXHzCk\n6Hs4hZN9Mne6huJmXwNjLtsTw7V5Tiq62+q1rLSAg7ZXSil+uwhq1RqgSyrqTjxs\nfAfDbClxfhP7+ytGvLYahvHSDH9K09xW4L2Z5Iy8WQKBgQDa4yZzSxRXcdmT+aPv\nq/oKPzEUueIm7eJUL7STXqf//A1zaKe2bJi/JA6psasIf3euPTMKXCS5wp84OdFa\n/GVBxsgdggEtPmRNePhofPV+x7TnIRtO6OIgw7vL6w7ZirluWHfwdqvykIUF6WBx\nwqJvRJJKlWgf/05JBCwV+N3eiQKBgQDCoadJj9OA4QzmJrjDnaMcUh8iK5RTLIUZ\nuK6/vSO0S4D/A5p7DBTtkvzBLyLT5556KSoxsrej5Vm9Zo1UOsGQ+AX2qU6F3nLW\nKUx0i+AZcz6qrUPogLjG6XvdcrFnh72i7lc+PNmmdRolvWARr4fApUbSa26Em917\nRzDkmuhvmQKBgQCrXf1jdFtnnsXWeTLk2IK49QJLFMC+860ndfXtDsV+v2oUedIc\nG2d29hbYujWKQKmFa3qDWOKT4JBhJ7sFfecUmTlhCMA9GMTUdqocvABDkrzJ23yS\nyfcH6dYkb1I/9MD6aB72zyINlSHgH/eW+OfNLyVNaS2NJ4e12KNfTGj/6QKBgFJq\n8dQMu5uPsU6khwkO78tGWzi1C5JM/+/sbNN03HG0p2NVu0zvyMzxuWZ092KUal+A\nnwV8kJcuv9mcW6yXVPB2ls/k0gOON0LJKj8QHE2qp5bO2DrUh2pz5KfZsZYNvRgJ\npZgNXH1IiVIB53SVx/6j/mGMbLhq6FcTxniHwHXBAoGAA0IhdUA7Ua5P60E0O2kP\nVIvkNSLQ7e5Aq9Tmzcv77u2XuiUbCGShxtYwZFadKsoplRk+4bCAITbnOWv+gJSF\nYql3/f+uWmFwZIc2Scqjl8t4T1hSy1pePK2+m3vNEDLQjmDxk5e7yN2MtOmZiv+u\nJW11OPNDoRV2Wn49ZtE7IE4=\n-----END PRIVATE KEY-----\n",
+  "client_email": "eli-233@votacion-espi.iam.gserviceaccount.com",
+  "client_id": "103010286955633070229",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/eli-233%40votacion-espi.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
