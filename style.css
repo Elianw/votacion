@@ -1,71 +1,97 @@
-/* ... (Estilos generales sin cambios) ... */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 :root {
     --primary-color: #4a69bd; --primary-hover: #3c5aa6; --success-color: #2ecc71;
     --error-color: #e74c3c; --light-gray: #f1f2f6; --text-color: #34495e;
     --border-color: #dfe4ea;
 }
-body, .container, .login-logo, h1, p, .input-group, label, input, button, .mensaje { /* sin cambios */ }
-#contador-seleccion, .grilla-candidatos, .candidato-card, .candidato-foto, .candidato-info, .candidato-nombre, .nombre-linea, .candidato-lote, .candidato-propuesta, .hidden-checkbox, .checkbox-label { /* sin cambios */ }
-.botones-finales, .whatsapp-button, .texto-final { /* sin cambios */ }
-
-/* --- NUEVO: Estilos para el área de Preselección --- */
+body {
+    font-family: 'Poppins', sans-serif; background-color: var(--light-gray); color: var(--text-color);
+    display: flex; justify-content: center; align-items: center; min-height: 100vh;
+    margin: 0; padding: 20px; box-sizing: border-box;
+}
+.container {
+    background-color: white; padding: 40px; border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); text-align: center;
+    width: 100%; max-width: 900px;
+}
+.container.login-page { max-width: 450px; }
+.login-logo {
+    width: 120px; height: 120px; border-radius: 12px;
+    margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+h1 { color: #2c3e50; margin-top: 0; margin-bottom: 10px; font-weight: 600; line-height: 1.3; }
+p { color: #7f8c8d; margin-bottom: 30px; }
+.input-group { margin-bottom: 20px; text-align: left; }
+label { display: block; margin-bottom: 8px; font-weight: 500; color: #34495e; }
+input[type="text"], input[type="password"], input[type="email"] {
+    width: 100%; padding: 12px; border: 1px solid var(--border-color);
+    border-radius: 8px; box-sizing: border-box; font-family: 'Poppins', sans-serif;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
+    outline: none; border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(74, 105, 189, 0.2);
+}
+button {
+    width: 100%; padding: 12px; background-color: var(--primary-color); color: white;
+    border: none; border-radius: 8px; font-size: 16px; cursor: pointer;
+    transition: all 0.3s; margin-top: 10px; font-weight: 500;
+}
+button:hover { background-color: var(--primary-hover); transform: translateY(-2px); }
+button:disabled { background-color: #bdc3c7; cursor: not-allowed; transform: none; }
+.mensaje { margin-top: 20px; font-weight: 500; min-height: 20px; }
+.mensaje.exito { color: var(--success-color); }
+.mensaje.error { color: var(--error-color); }
 #preseleccion-container {
-    background-color: var(--light-gray);
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 25px;
+    background-color: var(--light-gray); border-radius: 12px;
+    padding: 20px; margin-bottom: 25px;
 }
-#preseleccion-container h2 {
-    margin: 0 0 15px 0;
-    font-size: 1.2em;
-    color: var(--text-color);
-}
-.slots-container {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 15px;
-}
+#preseleccion-container h2 { margin: 0 0 15px 0; font-size: 1.2em; color: var(--text-color); }
+.slots-container { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; }
 .candidato-slot {
-    background-color: white;
-    border-radius: 8px;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 120px;
-    border: 2px dashed var(--border-color);
-    transition: all 0.3s;
+    background-color: white; border-radius: 8px; padding: 10px; display: flex;
+    flex-direction: column; align-items: center; justify-content: center;
+    min-height: 120px; border: 2px dashed var(--border-color); transition: all 0.3s;
 }
-.slot-vacio {
-    color: #bdc3c7;
-    font-weight: 500;
+.slot-vacio { color: #bdc3c7; font-weight: 500; }
+.candidato-slot img { width: 50px; height: 50px; border-radius: 50%; margin-bottom: 8px; }
+.candidato-slot p { font-size: 13px; font-weight: 600; margin: 0; color: var(--text-color); line-height: 1.2; }
+.candidato-slot span { font-size: 11px; color: var(--primary-color); font-weight: 500; }
+#contador-seleccion {
+    font-size: 1.1em; font-weight: 600; color: var(--text-color); margin-bottom: 20px;
+    padding: 10px; background-color: var(--light-gray); border-radius: 8px;
 }
-.candidato-slot img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-bottom: 8px;
+.grilla-candidatos { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
+.candidato-card {
+    display: flex; flex-direction: column; text-align: center; 
+    border: 2px solid var(--border-color); padding: 20px 15px; border-radius: 12px; 
+    transition: all 0.2s ease-in-out;
 }
-.candidato-slot p {
-    font-size: 13px;
-    font-weight: 600;
-    margin: 0;
-    color: var(--text-color);
-    line-height: 1.2;
+.candidato-card.seleccionado {
+    border-color: var(--success-color); box-shadow: 0 5px 15px rgba(46, 204, 113, 0.2);
+    transform: translateY(-3px); opacity: 0.6;
 }
-.candidato-slot span {
-    font-size: 11px;
-    color: var(--primary-color);
-    font-weight: 500;
+.candidato-card.error-seleccion { border-color: var(--error-color); transform: scale(1.05); }
+.candidato-foto {
+    width: 80px; height: 80px; border-radius: 50%; object-fit: cover;
+    margin: 0 auto 15px auto; border: 3px solid white; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
-
-/* --- Estilos para el Modal de Confirmación --- */
+.candidato-info { display: flex; flex-direction: column; flex-grow: 1; }
+.candidato-nombre { margin: 0 0 5px 0; font-size: 1em; font-weight: 600; min-height: 2.4em; line-height: 1.2em; }
+.nombre-linea { display: block; }
+.candidato-lote { font-size: 13px; font-weight: 600; color: var(--primary-color); margin: 5px 0 10px 0; padding: 0; }
+.candidato-propuesta { font-size: 12px; margin: 0 0 15px 0; color: #7f8c8d; padding: 0; flex-grow: 1; }
+.hidden-checkbox { display: none; }
+.checkbox-label {
+    display: inline-block; background-color: var(--light-gray);
+    padding: 8px 12px; border-radius: 20px; cursor: pointer;
+    font-size: 13px; font-weight: 500; transition: all 0.3s;
+}
+.candidato-card.seleccionado .checkbox-label { background-color: var(--success-color); color: white; }
 .modal-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background-color: rgba(0, 0, 0, 0.6); display: flex;
-    justify-content: center; align-items: center; z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.6); display: flex; justify-content: center;
+    align-items: center; z-index: 1000;
 }
 .modal-contenido {
     background-color: white; padding: 30px; border-radius: 12px;
@@ -76,24 +102,10 @@ body, .container, .login-logo, h1, p, .input-group, label, input, button, .mensa
 .modal-contenido #alerta-mensaje { color: #7f8c8d; margin-bottom: 25px; }
 .modal-contenido #alerta-mensaje ul { list-style: none; padding: 0; text-align: left; }
 .modal-contenido #alerta-mensaje li { font-weight: 500; margin-bottom: 5px; }
-
-.modal-botones {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-}
-.modal-botones button {
-    flex: 1;
-    margin-top: 0;
-}
-.modal-botones .btn-secundario {
-    background-color: #bdc3c7;
-}
-.modal-botones .btn-secundario:hover {
-    background-color: #95a5a6;
-}
-
-/* --- Diseño Responsivo (sin cambios) --- */
-@media (max-width: 920px) { /* ... */ }
-@media (max-width: 600px) { /* ... */ }
-@media (max-width: 480px) { /* ... */ }
+.modal-botones { display: flex; gap: 15px; justify-content: center; }
+.modal-botones button { flex: 1; margin-top: 0; }
+.modal-botones .btn-secundario { background-color: #bdc3c7; }
+.modal-botones .btn-secundario:hover { background-color: #95a5a6; }
+@media (max-width: 920px) { .container { padding: 30px; } .grilla-candidatos, .slots-container { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 600px) { .container { padding: 20px; } .grilla-candidatos, .slots-container { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .grilla-candidatos { grid-template-columns: 1fr; } .slots-container { grid-template-columns: repeat(2, 1fr); } }
