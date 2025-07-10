@@ -1,4 +1,3 @@
-// CAMBIO: http -> https
 const SCRIPT_URL = "https://votacion-consejo-espinillo.onrender.com/login";
 
 const form = document.getElementById('loginForm');
@@ -13,9 +12,10 @@ form.addEventListener('submit', function(e) {
     mensajeEl.textContent = '';
     mensajeEl.className = 'mensaje';
 
+    // CAMBIO: Se usa .trim() para limpiar los espacios
     const data = {
-        lote: form.lote.value,
-        codigo: form.codigo.value
+        lote: form.lote.value.trim(),
+        codigo: form.codigo.value.trim()
     };
 
     fetch(SCRIPT_URL, {
@@ -33,8 +33,8 @@ form.addEventListener('submit', function(e) {
         if (result.exito) {
             mensajeEl.classList.add('exito');
             
-            localStorage.setItem('userLote', form.lote.value);
-            localStorage.setItem('userCodigo', form.codigo.value);
+            localStorage.setItem('userLote', data.lote); // Usamos el dato ya limpiado
+            localStorage.setItem('userCodigo', data.codigo); // Usamos el dato ya limpiado
 
             setTimeout(() => {
                 window.location.href = "votacion.html";
