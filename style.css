@@ -56,6 +56,10 @@ h1 {
     line-height: 1.3;
 }
 
+h2 {
+    color: #34495e;
+}
+
 p {
     color: #7f8c8d;
     margin-bottom: 30px;
@@ -89,7 +93,7 @@ button:disabled { background-color: #bdc3c7; cursor: not-allowed; transform: non
 /* --- Estilos Página de Votación --- */
 #preseleccion-container {
     background-color: var(--light-gray); border-radius: 12px;
-    padding: 20px; margin-bottom: 25px;
+    padding: 20px; margin-bottom: 25px; margin-top: 25px;
 }
 #preseleccion-container h2 { margin: 0 0 15px 0; font-size: 1.2em; color: var(--text-color); }
 .slots-container { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; }
@@ -102,6 +106,7 @@ button:disabled { background-color: #bdc3c7; cursor: not-allowed; transform: non
 .candidato-slot img { width: 50px; height: 50px; border-radius: 50%; margin-bottom: 8px; }
 .candidato-slot p { font-size: 13px; font-weight: 600; margin: 0; color: var(--text-color); line-height: 1.2; }
 .candidato-slot span { font-size: 11px; color: var(--primary-color); font-weight: 500; }
+
 #contador-seleccion {
     font-size: 1.1em; font-weight: 600; color: var(--text-color); margin-bottom: 20px;
     padding: 10px; background-color: var(--light-gray); border-radius: 8px;
@@ -169,15 +174,13 @@ button:disabled { background-color: #bdc3c7; cursor: not-allowed; transform: non
     color: #7f8c8d;
 }
 
-/* --- DISEÑO RESPONSIVO (ACTUALIZADO) --- */
+/* --- DISEÑO RESPONSIVO --- */
 @media (max-width: 920px) {
     .container { padding: 30px; }
     .grilla-candidatos, .slots-container { grid-template-columns: repeat(3, 1fr); }
 }
-
 @media (max-width: 768px) {
     .container { padding: 20px; }
-    /* Se asegura que tanto la grilla principal como los slots de preselección tengan 2 columnas en tablets y celulares */
     .grilla-candidatos, .slots-container { grid-template-columns: repeat(2, 1fr); }
     .botones-finales { flex-direction: column; }
 }
