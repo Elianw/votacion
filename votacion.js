@@ -1,10 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const mainContainer = document.querySelector('.container');
     const candidatosContainer = document.getElementById('candidatos-container');
-    const preseleccionSlots = document.getElementById('preseleccion-slots');
-    const contadorEl = document.getElementById('contador-seleccion');
     const lote = localStorage.getItem('userLote'), codigo = localStorage.getItem('userCodigo');
-    
     if (!lote || !codigo) { window.location.replace('index.html'); return; }
 
     const modal = {
@@ -31,29 +28,10 @@ document.addEventListener('DOMContentLoaded', () => {
         ocultar: function() { this.overlay.style.display = 'none'; }
     };
 
-    function actualizarUI() {
-        const seleccionados = document.querySelectorAll('input[name="candidato"]:checked');
-        contadorEl.textContent = `Seleccionados: ${seleccionados.length} de 5`;
-        preseleccionSlots.innerHTML = '';
-
-        seleccionados.forEach(checkbox => {
-            const card = checkbox.closest('.candidato-card');
-            const foto = card.querySelector('.candidato-foto').src;
-            const nombre = card.querySelector('.candidato-nombre').innerText;
-            const loteCandidato = card.querySelector('.candidato-lote').innerText;
-            const slotHTML = `<div class="candidato-slot">
-                                <img src="${foto}" alt="${nombre.replace('\n', ' ')}">
-                                <p>${nombre.replace('\n', ' ')}</p>
-                                <span>${loteCandidato}</span>
-                              </div>`;
-            preseleccionSlots.innerHTML += slotHTML;
-        });
-
-        for (let i = seleccionados.length; i < 5; i++) {
-            preseleccionSlots.innerHTML += '<div class="candidato-slot slot-vacio">Vacío</div>';
-        }
-        
-        document.querySelectorAll('.grilla-candidatos .candidato-card').forEach(card => {
+    function actualizarVisuales() {
+        const seleccionados = document.querySelectorAll('input[name="candidato"]:checked').length;
+        document.getElementById('contador-seleccion').textContent = `Seleccionados: ${seleccionados} de 5`;
+        document.querySelectorAll('.candidato-card').forEach(card => {
             const checkbox = card.querySelector('input[type="checkbox"]');
             const label = card.querySelector('.checkbox-label');
             if (checkbox.checked) {
@@ -64,6 +42,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 label.textContent = 'Seleccionar';
             }
         });
+        const preseleccionSlots = document.getElementById('preseleccion-slots');
+        preseleccionSlots.innerHTML = '';
+        document.querySelectorAll('input[name="candidato"]:checked').forEach(checkbox => {
+            const card = checkbox.closest('.candidato-card');
+            const foto = card.querySelector('.candidato-foto').src;
+            const nombre = card.querySelector('.candidato-nombre').innerText;
+            const loteCandidato = card.querySelector('.candidato-lote').innerText;
+            const slotHTML = `<div class="candidato-slot"><img src="${foto}" alt="${nombre.replace('\n', ' ')}"><p>${nombre.replace('\n', ' ')}</p><span>${loteCandidato}</span></div>`;
+            preseleccionSlots.innerHTML += slotHTML;
+        });
+        for (let i = document.querySelectorAll('input[name="candidato"]:checked').length; i < 5; i++) {
+            preseleccionSlots.innerHTML += '<div class="candidato-slot slot-vacio">Vacío</div>';
+        }
     }
 
     fetch('https://votacion-consejo-espinillo.onrender.com/candidatos')
@@ -73,12 +64,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const j = Math.floor(Math.random() * (i + 1));
                 [candidatos[i], candidatos[j]] = [candidatos[j], candidatos[i]];
             }
-
             const form = document.createElement('form');
             form.id = 'votoForm';
             const grillaDiv = document.createElement('div');
             grillaDiv.className = 'grilla-candidatos';
-            
             candidatos.forEach(candidato => {
                 const candidatoDiv = document.createElement('div');
                 candidatoDiv.className = 'candidato-card';
@@ -91,7 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 grillaDiv.appendChild(candidatoDiv);
             });
             form.appendChild(grillaDiv);
-
             form.addEventListener('change', e => {
                 if (e.target.type === 'checkbox') {
                     if (form.querySelectorAll('input[name="candidato"]:checked').length > 5) {
@@ -101,18 +89,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     actualizarUI();
                 }
             });
-
             const emailDiv = document.createElement('div');
             emailDiv.className = 'input-group';
             emailDiv.style.marginTop = '30px';
             emailDiv.innerHTML = `<label for="emailInput">Email (Opcional)</label><input type="email" id="emailInput" placeholder="Recibe una copia de tu voto">`;
             form.appendChild(emailDiv);
-            
             const submitButton = document.createElement('button');
             submitButton.type = 'submit';
             submitButton.textContent = 'Emitir Voto';
             form.appendChild(submitButton);
-            
             candidatosContainer.innerHTML = '';
             candidatosContainer.appendChild(form);
             actualizarUI();
@@ -120,13 +105,10 @@ document.addEventListener('DOMContentLoaded', () => {
             form.addEventListener('submit', function (e) {
                 e.preventDefault();
                 const seleccionados = document.querySelectorAll('input[name="candidato"]:checked');
-                const mensajeVotacion = document.getElementById('mensaje-votacion');
-                
                 if (seleccionados.length === 0) {
                     modal.mostrar({titulo: 'Selección Vacía', mensaje: 'Debes elegir al menos un candidato.', botones: [{texto: 'Aceptar'}]});
                     return;
                 }
-                
                 const enviarVoto = () => {
                     const votoIds = Array.from(seleccionados).map(cb => cb.value);
                     const votoNombres = Array.from(seleccionados).map(cb => cb.getAttribute('data-nombre'));
@@ -141,13 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             const mensajeWhatsapp = `Hola, quiero mi comprobante de voto para el Lote ${lote}.`;
                             const numeroWhatsapp = "5491121780900";
                             const whatsappLink = `https://wa.me/${numeroWhatsapp}?text=${encodeURIComponent(mensajeWhatsapp)}`;
-                            mainContainer.innerHTML = `
-                                <h2 style="font-size: 2em;">¡Gracias!</h2>
-                                <p style="font-size: 1.2em; color: #666;">Tu voto ha sido registrado.</p>
-                                <div class="botones-finales">
-                                    <a href="${whatsappLink}" target="_blank" class="whatsapp-button">Pedí tu comprobante por WhatsApp</a>
-                                </div>
-                                <p class="texto-final">Ya podés cerrar esta ventana.</p>`;
+                            mainContainer.innerHTML = `<h2 style="font-size: 2em;">¡Gracias!</h2><p style="font-size: 1.2em; color: #666;">Tu voto ha sido registrado.</p><div class="botones-finales"><a href="${whatsappLink}" target="_blank" class="whatsapp-button">Pedí tu comprobante por WhatsApp</a></div><p class="texto-final">Ya podés cerrar esta ventana.</p>`;
                             localStorage.clear();
                             history.replaceState(null, '', 'gracias.html');
                         } else {
@@ -157,10 +133,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         modal.mostrar({titulo: 'Error de Conexión', mensaje: 'No se pudo comunicar con el servidor. Intentá de nuevo más tarde.', botones: [{texto: 'Cerrar'}]})
                     });
                 };
-
+                
+                // --- CAMBIO: Se añade el lote al mensaje de confirmación ---
                 let confirmacionHTML = '<p>Vas a emitir tu voto por los siguientes candidatos:</p><ul style="text-align: left; display: inline-block; margin-top: 10px;">';
                 seleccionados.forEach(cb => {
-                    confirmacionHTML += `<li>${cb.getAttribute('data-nombre')}</li>`;
+                    confirmacionHTML += `<li>${cb.getAttribute('data-nombre')} (Lote: ${cb.getAttribute('data-lote')})</li>`;
                 });
                 confirmacionHTML += '</ul><p style="font-weight: bold; margin-top: 15px;">¿Estás seguro?</p>';
 
