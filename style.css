@@ -130,11 +130,10 @@ button:disabled { background-color: #bdc3c7; cursor: not-allowed; transform: non
     margin: 0 0 5px 0;
     font-size: 1em;
     font-weight: 600;
-    min-height: 2.4em; /* Asegura espacio para dos líneas */
+    min-height: 2.4em;
     line-height: 1.2em;
 }
 
-/* NUEVO: Estilo para forzar el salto de línea */
 .nombre-linea {
     display: block;
 }
@@ -191,11 +190,9 @@ button:disabled { background-color: #bdc3c7; cursor: not-allowed; transform: non
     .container { padding: 30px; }
     .grilla-candidatos { grid-template-columns: repeat(3, 1fr); }
 }
+
 @media (max-width: 600px) {
     .container { padding: 20px; }
-    .grilla-candidatos { grid-template-columns: repeat(2, 1fr); }
+    .grilla-candidatos { grid-template-columns: repeat(2, 1fr); } /* 2 columnas en celulares */
     .botones-finales { flex-direction: column; }
-}
-@media (max-width: 480px) {
-    .grilla-candidatos { grid-template-columns: 1fr; }
 }
