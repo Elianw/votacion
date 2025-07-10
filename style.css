@@ -185,14 +185,57 @@ button:disabled { background-color: #bdc3c7; cursor: not-allowed; transform: non
     color: #7f8c8d;
 }
 
+/* --- Estilos para la Alerta Personalizada --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-contenido {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.modal-contenido h2 {
+    margin-top: 0;
+    color: #34495e;
+}
+
+.modal-contenido p {
+    color: #7f8c8d;
+    margin-bottom: 25px;
+}
+
+.modal-contenido button {
+    background-color: var(--primary-color);
+    width: auto;
+    padding: 10px 30px;
+}
+
+
 /* --- DISEÑO RESPONSIVO --- */
 @media (max-width: 920px) {
     .container { padding: 30px; }
     .grilla-candidatos { grid-template-columns: repeat(3, 1fr); }
 }
-
 @media (max-width: 600px) {
     .container { padding: 20px; }
-    .grilla-candidatos { grid-template-columns: repeat(2, 1fr); } /* 2 columnas en celulares */
+    .grilla-candidatos { grid-template-columns: repeat(2, 1fr); }
     .botones-finales { flex-direction: column; }
+}
+@media (max-width: 480px) {
+    .grilla-candidatos { grid-template-columns: 1fr; }
 }
