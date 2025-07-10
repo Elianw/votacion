@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    fetch('https://elianmw.pythonanywhere.com/candidatos')
+    fetch('https://votacion-consejo-espinillo.onrender.com/candidatos')
         .then(response => response.json())
         .then(candidatos => {
             const form = document.createElement('form');
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const email = document.getElementById('emailInput').value;
                 submitButton.disabled = true;
                 submitButton.textContent = 'Procesando...';
-                fetch('https://elianmw.pythonanywhere.com/votar', {
+                fetch('https://votacion-consejo-espinillo.onrender.com/votar', {
                     method: 'POST', mode: 'cors', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ lote, codigo, votoIds, votoNombres, votoLotes, email })
                 }).then(response => response.json()).then(resultado => {
