@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    fetch('http://127.0.0.1:5000/candidatos')
+    fetch('https://elianmw.pythonanywhere.com/candidatos')
         .then(response => response.json())
         .then(candidatos => {
             const form = document.createElement('form');
